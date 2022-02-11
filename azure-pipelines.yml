@@ -23,9 +23,11 @@ steps:
       key: 'npm | "$(Agent.OS)" | package-lock.json'
       path: $(NG_CACHE_DIR_PATH)
 
-  - bash: |
-      ng build --output-path=$(Build.ArtifactStagingDirectory)
+  - task: Npm@1
     displayName: Build Angular App
+    inputs:
+      command: custom
+      customCommand: 'run build -- --configuration=production --output-path=$(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
     inputs:

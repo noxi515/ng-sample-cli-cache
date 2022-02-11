@@ -20,7 +20,7 @@ steps:
   - task: Cache@2
     displayName: Use Angular CLI Build Cache
     inputs:
-      key: 'npm | "$(Agent.OS)" | package-lock.json | **/*.ts, **/*.html, **/*.scss'
+      key: 'npm | "$(Agent.OS)" | package-lock.json | src/**/*.ts'
       restoreKeys: |
         npm | "$(Agent.OS)" | package-lock.json
         npm | "$(Agent.OS)"

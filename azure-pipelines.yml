@@ -1,0 +1,34 @@
+name: 
+
+variables:
+  NG_CACHE_DIR_PATH: '.angular/cache'
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: UseNode@1
+    displayName: Install Node.js
+    inputs:
+      version: 16
+
+  - task: Npm@1
+    displayName: Install NPM Dependencies
+    inputs:
+      command: install
+
+  - task: Cache@2
+    displayName: Use Angular CLI Build Cache
+    inputs:
+      key: 'npm | "$(Agent.OS)" | package-lock.json'
+      path: $(NG_CACHE_DIR_PATH)
+
+  - bash: |
+      ng build --output-path=$(Build.ArtifactStagingDirectory)
+    displayName: Build Angular App
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'

@@ -20,7 +20,10 @@ steps:
   - task: Cache@2
     displayName: Use Angular CLI Build Cache
     inputs:
-      key: 'npm | "$(Agent.OS)" | package-lock.json'
+      key: 'npm | "$(Agent.OS)" | package-lock.json | **/*.ts, **/*.html, **/*.scss'
+      restoreKeys: |
+        npm | "$(Agent.OS)" | package-lock.json
+        npm | "$(Agent.OS)"
       path: $(NG_CACHE_DIR_PATH)
 
   - task: Npm@1
@@ -30,6 +33,7 @@ steps:
       customCommand: 'run build -- --configuration=production --output-path=$(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
+    displayName: Publish Artifacts
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
       ArtifactName: 'drop'

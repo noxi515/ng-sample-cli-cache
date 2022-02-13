@@ -1,4 +1,4 @@
-name: 
+name:
 
 variables:
   NG_CACHE_DIR_PATH: '.angular/cache'
@@ -20,7 +20,7 @@ steps:
   - task: Cache@2
     displayName: Use Angular CLI Build Cache
     inputs:
-      key: 'npm | "$(Agent.OS)" | package-lock.json | src/**/*.ts'
+      key: 'npm | "$(Agent.OS)" | package-lock.json | src/**/*.ts, src/**/*.html, src/**/*.scss'
       restoreKeys: |
         npm | "$(Agent.OS)" | package-lock.json
         npm | "$(Agent.OS)"
